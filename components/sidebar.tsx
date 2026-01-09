@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { LayoutDashboard, Users, Settings, BookOpen, Menu, ChevronLeft, Briefcase, Search } from "lucide-react"
+import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -62,7 +63,7 @@ export function Sidebar({ className }: { className?: string }) {
           <SheetHeader className="p-6 border-b">
             <SheetTitle>
                 <div className="flex items-center gap-2 font-bold text-xl text-primary">
-                    <span>LawPavillion</span>
+                    <Image src="/lawpavillionlogo.svg" alt="LawPavillion" width={146} height={21} priority className="dark:invert dark:hue-rotate-180" />
                 </div>
             </SheetTitle>
           </SheetHeader>
@@ -94,7 +95,7 @@ export function Sidebar({ className }: { className?: string }) {
       >
         <div className="flex h-16 items-center border-b px-6">
            {!isCollapsed && (
-             <span className="text-xl font-bold text-primary">LawPavillion</span>
+             <Image src="/lawpavillionlogo.svg" alt="LawPavillion" width={146} height={21} priority className="dark:invert dark:hue-rotate-180" />
            )}
            {isCollapsed && (
              <span className="text-xl font-bold text-primary mx-auto">LP</span>
