@@ -1,6 +1,13 @@
-"use client"
+"use client";
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "recharts"
+import {
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 
 const data = [
   {
@@ -51,7 +58,7 @@ const data = [
     name: "Dec",
     total: Math.floor(Math.random() * 5000) + 1000,
   },
-]
+];
 
 export function Overview() {
   return (
@@ -71,12 +78,16 @@ export function Overview() {
           axisLine={false}
           tickFormatter={(value: any) => `${value}`}
         />
-        <Tooltip 
-            cursor={{fill: 'transparent'}}
-            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+        <Tooltip
+          cursor={{ fill: "transparent" }}
+          contentStyle={{
+            borderRadius: "8px",
+            border: "none",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+          }}
         />
         <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
-  )
+  );
 }

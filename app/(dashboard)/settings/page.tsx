@@ -1,7 +1,5 @@
-"use client"
-
 import { useTheme } from "next-themes"
-import { useAuth } from "@/lib/auth-context"
+// import { useAuth } from "@/lib/auth-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -11,8 +9,8 @@ import { Separator } from "@/components/ui/separator"
 import { Moon, Sun } from "lucide-react"
 
 export default function SettingsPage() {
-  const { setTheme, theme } = useTheme()
-  const { user } = useAuth()
+//   const { setTheme, theme } = useTheme()
+//   const { user } = useAuth()
 
   return (
     <div className="space-y-6">
@@ -35,22 +33,22 @@ export default function SettingsPage() {
             <CardContent className="space-y-4">
                 <div className="flex items-center space-x-4">
                     <Avatar className="h-20 w-20">
-                        <AvatarImage src={user?.avatar} />
-                        <AvatarFallback className="text-lg">{user?.name?.charAt(0)}</AvatarFallback>
+                        {/* <AvatarImage src={user?.avatar} /> */}
+                        {/* <AvatarFallback className="text-lg">{user?.name?.charAt(0)}</AvatarFallback> */}
                     </Avatar>
                     <Button variant="outline">Change Avatar</Button>
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="name">Name</Label>
-                    <Input id="name" defaultValue={user?.name || "Chukwudi Lawal"} />
+                    {/* <Input id="name" defaultValue={user?.name || "Chukwudi Lawal"} /> */}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" defaultValue={user?.email || "lawyer@lawpavillion.com"} disabled />
+                    {/* <Input id="email" defaultValue={user?.email || "lawyer@lawpavillion.com"} disabled /> */}
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="role">Role</Label>
-                    <Input id="role" defaultValue={user?.role || "Senior Associate"} />
+                    {/* <Input id="role" defaultValue={user?.role || "Senior Associate"} /> */}
                 </div>
             </CardContent>
             <CardFooter>
@@ -74,22 +72,22 @@ export default function SettingsPage() {
                         </p>
                     </div>
                     <div className="flex items-center space-x-2">
-                        <Button 
+                        {/* <Button 
                             variant={theme === "light" ? "default" : "outline"} 
                             size="sm" 
                             onClick={() => setTheme("light")}
                             className="w-24 gap-2"
                         >
                             <Sun className="h-4 w-4" /> Light
-                        </Button>
-                        <Button 
+                        </Button> */}
+                        {/* <Button 
                             variant={theme === "dark" ? "default" : "outline"} 
                             size="sm" 
                             onClick={() => setTheme("dark")}
                             className="w-24 gap-2"
                         >
                             <Moon className="h-4 w-4" /> Dark
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </CardContent>

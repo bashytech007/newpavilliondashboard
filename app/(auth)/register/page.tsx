@@ -1,7 +1,7 @@
 "use client";
 import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
-import { authenticate } from "@/lib/actions";
+import { register } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -20,7 +20,7 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
+    register,
     undefined
   );
 
@@ -29,13 +29,23 @@ export default function LoginPage() {
       <CardHeader>
         <CardTitle className="text-2xl text-primary">LawPavillion</CardTitle>
         <CardDescription>
-          Enter your email below to login to your dashboard.
+          Welcome to LawPavillon, complete below form to get started.
         </CardDescription>
       </CardHeader>
 
       <form action={formAction}>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
+            <Label htmlFor="name">Username</Label>
+            <Input
+              id="name"
+              type="name"
+              name="name"
+              placeholder="JSmith"
+              required
+            />
+          </div>
+           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
@@ -53,7 +63,7 @@ export default function LoginPage() {
               name="password"
               placeholder="Enter password"
               required
-              minLength={6}
+              minLength={4}
             />
           </div>
         </CardContent>
@@ -75,7 +85,10 @@ export default function LoginPage() {
               <p className="text-sm pt-3 text-red-500">{errorMessage}</p>
             )}
             <p className="pt-4">
-              Are you new? <Link href={"/register"} className="text-orange-400">Register Here</Link>
+              Already Registered?{" "}
+              <Link href={"/login"} className="text-orange-400">
+                Login Here
+              </Link>
             </p>
           </div>
         </CardFooter>
