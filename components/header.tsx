@@ -10,7 +10,7 @@ export async function Header() {
   const session = await auth();
 
   return (
-    <header className="flex h-16 items-center gap-4 border-b bg-background px-4 pl-14 md:px-6 shadow-sm transition-all duration-300">
+    <header className="flex h-16 items-center gap-4 border-b bg-background px-4 pl-14 lg:pl-6 shadow-sm transition-all duration-300">
       <div className="flex-1">
         {session?.user?.name && <Greeting userName={session.user.name} />}
       </div>

@@ -15,8 +15,8 @@ export function DashboardLayoutClient({
   return (
     <div
       className={cn(
-        "grid min-h-screen w-full transition-all duration-300",
-        isCollapsed ? "md:grid-cols-[80px_1fr]" : "md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]"
+        "grid h-screen w-full transition-all duration-300 overflow-hidden",
+        isCollapsed ? "lg:grid-cols-[80px_1fr]" : "lg:grid-cols-[280px_1fr]"
       )}
     >
       {sidebar}

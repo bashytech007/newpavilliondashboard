@@ -17,7 +17,7 @@ export default async function DashboardLayout({
     <SidebarProvider>
       <DashboardLayoutClient sidebar={<Sidebar />}>
           <Header />
-          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 overflow-y-auto">
             <WelcomeToast userName={session?.user?.name || "User"} />
             {children}
           </main>
