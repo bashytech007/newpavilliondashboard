@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   description: "Legal Research Dashboard",
 };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  // Artificial delay to demonstrate skeleton loader
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  
   return <DashboardClientWrapper />;
 }

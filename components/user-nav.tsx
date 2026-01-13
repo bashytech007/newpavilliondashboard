@@ -1,3 +1,4 @@
+"use client";
 
 import {
   DropdownMenu,
@@ -11,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { logOut } from "@/lib/actions";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface UserNavProps {
   user: {
@@ -21,6 +23,23 @@ interface UserNavProps {
 }
 
 export function UserNav({ user }: UserNavProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+        <Avatar>
+          <AvatarImage src={user.image || ""} alt={user.name || ""} />
+          <AvatarFallback>{user.name?.charAt(0) || "U"}</AvatarFallback>
+        </Avatar>
+      </Button>
+    );
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

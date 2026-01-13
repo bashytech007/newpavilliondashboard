@@ -18,7 +18,7 @@ export async function authenticate(
   formData: FormData
 ) {
   try {
-    await signIn("credentials", formData);
+    await signIn("credentials", { ...Object.fromEntries(formData), redirectTo: "/?welcome=true" });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -77,7 +77,7 @@ export async function register(
       if (!user) {
         return "Registration Failed";
       }
-      await signIn("credentials", { email, password, redirectTo: "/" });
+      await signIn("credentials", { email, password, redirectTo: "/?welcome=true" });
     } else {
       // RETURN PROPER ERROR MESSAGE TO USER
       return "Registration Failed";

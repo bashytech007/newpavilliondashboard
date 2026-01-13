@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Providers } from "@/components/providers";
 import { ThemeSync } from "@/components/ui/theme-sync";
 import { getTheme } from "@/lib/actions";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default async function RootLayout({
         <Providers>
           {children}
           <ThemeSync preferredTheme={theme} />
+          <Toaster />
         </Providers>
       </body>
     </html>
