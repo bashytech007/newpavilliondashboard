@@ -12,6 +12,7 @@ import { Bell, User } from "lucide-react";
 import { logOut } from "@/lib/actions";
 import { auth } from "@/auth";
 import { ThemeSwitcher } from "./ui/theme-switch";
+import Link from "next/link";
 
 export async function Header() {
   const session = await auth();
@@ -52,7 +53,9 @@ export async function Header() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/settings">Profile</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>Billing</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
