@@ -10,12 +10,12 @@ export async function Header() {
   const session = await auth();
 
   return (
-    <header className="flex h-16 items-center gap-4 border-b bg-background px-6 lg:px-10 shadow-sm transition-all duration-300">
+    <header className="flex h-16 items-center gap-4 border-b bg-background px-4 pl-14 md:px-6 shadow-sm transition-all duration-300">
       <div className="flex-1">
         {session?.user?.name && <Greeting userName={session.user.name} />}
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 md:gap-4">
         <ThemeSwitcher />
 
         <Button variant="ghost" size="icon">

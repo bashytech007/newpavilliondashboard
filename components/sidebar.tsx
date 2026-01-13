@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   Briefcase,
   Search,
+  LogOut,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -24,6 +25,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Separator } from "@/components/ui/separator";
 import { signOut } from "@/auth";
 import { logOut } from "@/lib/actions";
@@ -60,17 +72,23 @@ import { useSidebar } from "@/components/providers/sidebar-provider";
 
 export function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
-  const { isCollapsed, toggleSidebar } = useSidebar();
+  const { isCollapsed, toggleSidebar, setCollapsed } = useSidebar();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+
+  useEffect(() => {
+    setIsSheetOpen(false);
+  }, [pathname]);
+
   // We only mount the mobile Sheet on the client to avoid hydration errors
   // The Desktop sidebar renders normally (SSR compatible)
   const mobileSidebar = isMounted ? (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
@@ -112,6 +130,34 @@ export function Sidebar({ className }: { className?: string }) {
               {item.title}
             </Link>
           ))}
+          <Separator className="my-2" />
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <button className="flex w-full items-center gap-3 px-6 py-3 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10">
+                <LogOut className="h-5 w-5" />
+                Log out
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure you want to log out?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  You will need to sign in again to access your dashboard.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  onClick={async () => {
+                    await logOut();
+                  }}
+                >
+                  Log out
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </SheetContent>
     </Sheet>
@@ -158,6 +204,7 @@ export function Sidebar({ className }: { className?: string }) {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => setCollapsed(true)}
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
                   pathname === item.href

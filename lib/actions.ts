@@ -6,6 +6,7 @@ import { connectDB } from "./mongoose";
 import { User } from "@/models/User";
 import { Case } from "@/models/Case";
 import { TeamMember } from "@/models/TeamMember";
+import { ResearchDocument } from "@/models/ResearchDocument";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import bcrypt from "bcrypt";
@@ -202,3 +203,55 @@ export async function getCaseCount() {
   }
 }
 
+
+// Research Actions
+export async function createResearchDocument(formData: FormData) {
+  try {
+    await connectDB();
+    const title = formData.get("title");
+    const type = formData.get("type");
+    const source = formData.get("source");
+    const summary = formData.get("summary");
+    const url = formData.get("url");
+
+    await ResearchDocument.create({
+      title,
+      type,
+      source,
+      summary,
+      url,
+    });
+
+    revalidatePath("/research");
+    revalidatePath("/");
+    return { success: true };
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to create research document!");
+  }
+}
+
+export async function getResearchDocuments(query: string = "") {
+  try {
+    await connectDB();
+    const regex = new RegExp(query, "i");
+    const documents = await ResearchDocument.find({
+      $or: [{ title: { $regex: regex } }, { summary: { $regex: regex } }],
+    }).sort({ createdAt: -1 });
+    return JSON.parse(JSON.stringify(documents));
+  } catch (err) {
+    console.log(err);
+    throw new Error("Failed to fetch research documents!");
+  }
+}
+
+export async function getResearchCount() {
+    try {
+        await connectDB();
+        const count = await ResearchDocument.countDocuments();
+        return count;
+    } catch (err) {
+        console.log(err);
+        return 0;
+    }
+}

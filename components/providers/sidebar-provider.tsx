@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 interface SidebarContextType {
   isCollapsed: boolean;
   toggleSidebar: () => void;
+  setCollapsed: (value: boolean) => void;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
@@ -30,13 +31,13 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  // Prevent hydration mismatch by rendering null or default until mounted if needed,
-  // but for layout stability we might want to default to expanded (false).
-  // However, if we blindly render false on server and true on client, we get a mismatch.
-  // We'll stick to 'false' as default.
+  const setCollapsed = (value: boolean) => {
+     setIsCollapsed(value);
+     localStorage.setItem("sidebarCollapsed", JSON.stringify(value));
+  };
 
   return (
-    <SidebarContext.Provider value={{ isCollapsed, toggleSidebar }}>
+    <SidebarContext.Provider value={{ isCollapsed, toggleSidebar, setCollapsed }}>
       {children}
     </SidebarContext.Provider>
   );

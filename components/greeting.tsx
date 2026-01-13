@@ -15,8 +15,8 @@ export function Greeting({ userName }: { userName: string }) {
   }, []);
 
   return (
-    <div className="hidden md:block">
-      <h2 className="text-lg font-semibold text-primary">
+    <div className="block">
+      <h2 className="text-sm md:text-xl font-semibold text-primary truncate max-w-[200px] md:max-w-none">
         {greeting}, {userName}
       </h2>
     </div>

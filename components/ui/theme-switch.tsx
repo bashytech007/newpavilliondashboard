@@ -41,8 +41,10 @@ export function ThemeSwitcher() {
     <div className="flex gap-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="relative">
-            Theme
+          <Button variant="ghost" size="icon" className="relative">
+            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
           </Button>
         </DropdownMenuTrigger>
 
@@ -55,20 +57,20 @@ export function ThemeSwitcher() {
             onClick={() => changeTheme("light")}
             className="flex justify-between hover:opacity-85"
           >
-            Light <Sun />
+            Light <Sun className="h-4 w-4" />
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => changeTheme("dark")}
             className="flex justify-between hover:opacity-85"
           >
-            Dark <Moon />
+            Dark <Moon className="h-4 w-4" />
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => changeTheme("system")}
             className="flex justify-between hover:opacity-85"
           >
             System
-            <Laptop />
+            <Laptop className="h-4 w-4" />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
