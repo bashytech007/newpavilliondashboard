@@ -26,9 +26,12 @@ export function ThemeSwitcher() {
 
   if (!mounted) {
     return (
-      <Button variant="ghost" className="relative" disabled>
-        Theme
-      </Button>
+      <div className="flex gap-2">
+         <Button variant="ghost" size="icon" className="relative" disabled>
+           <Sun className="h-[1.2rem] w-[1.2rem] opacity-50" />
+           <span className="sr-only">Toggle theme</span>
+         </Button>
+      </div>
     );
   }
 

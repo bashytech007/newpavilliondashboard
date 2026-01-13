@@ -65,14 +65,6 @@ export function UserNav({ user }: UserNavProps) {
         </DropdownMenuItem>
         <DropdownMenuItem>Billing</DropdownMenuItem>
         <DropdownMenuItem>Settings</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <form action={logOut} className="w-full">
-            <button className="rounded-md py-2 w-full text-left hover:text-destructive">
-              Log Out
-            </button>
-          </form>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
