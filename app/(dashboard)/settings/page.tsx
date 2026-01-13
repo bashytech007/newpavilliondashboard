@@ -1,6 +1,12 @@
 import { auth } from "@/auth";
 import { SettingsForm } from "@/components/settings-form";
 import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Settings",
+  description: "Manage your profile, preferences, and account settings.",
+};
 
 export default async function SettingsPage() {
   const session = await auth();

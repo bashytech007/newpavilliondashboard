@@ -9,9 +9,23 @@ import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
+import { SEO_DETAILS } from "@/lib/constants/seo";
+
 export const metadata: Metadata = {
-  title: "LawPavillion Dashboard",
-  description: "Advanced Legal Research Dashboard",
+  metadataBase: SEO_DETAILS.metadataBase,
+  title: SEO_DETAILS.title,
+  description: SEO_DETAILS.description,
+  openGraph: {
+    ...SEO_DETAILS.openGraph,
+    title: SEO_DETAILS.title,
+    description: SEO_DETAILS.description,
+  },
+  twitter: {
+    ...SEO_DETAILS.twitter,
+    title: SEO_DETAILS.title,
+    description: SEO_DETAILS.description,
+  },
+  icons: SEO_DETAILS.icons,
 };
 
 export default async function RootLayout({

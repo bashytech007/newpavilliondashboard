@@ -3,7 +3,8 @@ import { CasesView } from "@/components/cases-view";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Case Management - LawPavillion",
+  title: "Cases",
+  description: "View and manage your current legal cases and briefs.",
 };
 
 export default async function CaseManagementPage() {

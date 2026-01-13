@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ArrowLeft, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Research - LawPavillion",
+  title: "Research",
+  description: "AI-powered legal research and database access.",
 };
 
 export default function ResearchPage() {

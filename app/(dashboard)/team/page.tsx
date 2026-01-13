@@ -3,7 +3,8 @@ import { TeamView } from "@/components/team-view";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Team - LawPavillion",
+  title: "Team",
+  description: "Manage your legal team members and permissions.",
 };
 
 export default async function TeamPage() {
