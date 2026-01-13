@@ -11,13 +11,28 @@ export function WelcomeToast({ userName }: { userName: string }) {
   const hasShownToast = useRef(false);
 
   useEffect(() => {
-    const welcome = searchParams.get("welcome");
-    
+    const signup = searchParams.get("signup");
+    const login = searchParams.get("login");
+    // Handle legacy welcome param if any
+    const welcome = searchParams.get("welcome"); 
+
     // Prevent double toast on React Strict Mode re-renders
-    if (welcome && !hasShownToast.current) {
+    if ((signup || login || welcome) && !hasShownToast.current) {
       hasShownToast.current = true;
       
-      toast.success(`Welcome back, ${userName}!`, {
+      let message = "";
+      
+
+      if (signup) {
+        message = `Welcome ${userName}`;
+      } else if (login) {
+        message = `Welcome back, ${userName}`;
+      } else {
+        // Fallback or generic welcome query
+        message = `Welcome back, ${userName}`;
+      }
+
+      toast.success(message, {
         style: {
           backgroundColor: "#22c55e", 
           color: "#ffffff",
@@ -26,9 +41,12 @@ export function WelcomeToast({ userName }: { userName: string }) {
         duration: 4000,
       });
 
-      // Remove the query param cleanly
+      // Remove the query params cleanly
       const params = new URLSearchParams(searchParams.toString());
+      params.delete("signup");
+      params.delete("login");
       params.delete("welcome");
+      
       router.replace(`${pathname}?${params.toString()}`);
     }
   }, [searchParams, userName, router, pathname]);

@@ -4,6 +4,9 @@ import { Theme, User as IUser, UserWithPassword } from "@/interfaces";
 import { AuthError } from "next-auth";
 import { connectDB } from "./mongoose";
 import { User } from "@/models/User";
+import { Case } from "@/models/Case";
+import { TeamMember } from "@/models/TeamMember";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
@@ -18,7 +21,7 @@ export async function authenticate(
   formData: FormData
 ) {
   try {
-    await signIn("credentials", { ...Object.fromEntries(formData), redirectTo: "/?welcome=true" });
+    await signIn("credentials", { ...Object.fromEntries(formData), redirectTo: "/?login=true" });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -77,7 +80,7 @@ export async function register(
       if (!user) {
         return "Registration Failed";
       }
-      await signIn("credentials", { email, password, redirectTo: "/?welcome=true" });
+      await signIn("credentials", { email, password, redirectTo: "/?signup=true" });
     } else {
       // RETURN PROPER ERROR MESSAGE TO USER
       return "Registration Failed";
@@ -109,3 +112,93 @@ export async function getTheme() {
     }
   }
 }
+
+export async function createCase(formData: FormData) {
+  try {
+    await connectDB();
+    const title = formData.get("title");
+    const clientName = formData.get("clientName");
+    const caseNumber = formData.get("caseNumber");
+    const status = formData.get("status") || "Active";
+
+    if (!title || !clientName || !caseNumber) {
+      throw new Error("Missing required fields");
+    }
+
+    await Case.create({
+      title,
+      clientName,
+      caseNumber,
+      status,
+    });
+    
+    revalidatePath("/cases");
+    revalidatePath("/"); // Update dashboard too
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to create case" };
+  }
+}
+
+export async function getCases() {
+  try {
+    await connectDB();
+    const cases = await Case.find().sort({ createdAt: -1 }).lean();
+    // Convert _id to string for serialization
+    return cases.map((c: any) => ({ ...c, _id: c._id.toString() }));
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function createTeamMember(formData: FormData) {
+  try {
+    await connectDB();
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const role = formData.get("role") || "Member";
+    // For profile picture, we might just store a URL or generate one if not provided
+    // Since we don't have file upload set up, we'll assume a URL or use a placeholder logic in the UI
+    const image = formData.get("image") || ""; 
+
+    if (!name || !email) {
+      throw new Error("Missing required fields");
+    }
+
+    await TeamMember.create({
+      name,
+      email,
+      role,
+      image,
+    });
+
+    revalidatePath("/team");
+    return { success: true };
+  } catch (error) {
+    console.error("Error creating team member:", error);
+    return { error: "Failed to create team member" };
+  }
+}
+
+export async function getTeamMembers() {
+  try {
+    await connectDB();
+    const members = await TeamMember.find().sort({ createdAt: -1 }).lean();
+    return members.map((m: any) => ({ ...m, _id: m._id.toString() }));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getCaseCount() {
+  try {
+    await connectDB();
+    return await Case.countDocuments({ status: "Active" });
+  } catch (error) {
+    console.error(error);
+    return 0;
+  }
+}
+

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { DashboardClientWrapper } from "@/components/dashboard-client-wrapper";
+import { getCaseCount } from "@/lib/actions";
 
 export const metadata: Metadata = {
   title: "Dashboard - LawPavillion",
@@ -7,8 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-  // Artificial delay to demonstrate skeleton loader
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const activeCases = await getCaseCount();
   
-  return <DashboardClientWrapper />;
+  // Artificial delay to demonstrate skeleton loader (optional, kept for effect)
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  
+  return <DashboardClientWrapper activeCases={activeCases} />;
 }

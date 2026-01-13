@@ -123,37 +123,37 @@ export function SettingsForm({ user }: SettingsFormProps) {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between rounded-lg border p-4">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between rounded-lg border p-4">
               <div className="space-y-0.5">
                 <Label className="text-base">Theme</Label>
                 <p className="text-sm text-muted-foreground">
-                  Select your preferred theme for the dashboard.
+                  Select your preferred theme.
                 </p>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="grid grid-cols-3 gap-2 sm:flex sm:items-center">
                 <Button
                   variant={theme === "light" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setTheme("light")}
-                  className="w-24 gap-2"
+                  className="w-full sm:w-24 gap-2"
                 >
-                  <Sun className="h-4 w-4" /> Light
+                  <Sun className="h-4 w-4" /> <span className="hidden sm:inline">Light</span>
                 </Button>
                 <Button
                   variant={theme === "dark" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setTheme("dark")}
-                  className="w-24 gap-2"
+                  className="w-full sm:w-24 gap-2"
                 >
-                  <Moon className="h-4 w-4" /> Dark
+                  <Moon className="h-4 w-4" /> <span className="hidden sm:inline">Dark</span>
                 </Button>
                  <Button
                   variant={theme === "system" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setTheme("system")}
-                  className="w-24 gap-2"
+                  className="w-full sm:w-24 gap-2"
                 >
-                  <Laptop className="h-4 w-4" /> System
+                  <Laptop className="h-4 w-4" /> <span className="hidden sm:inline">System</span>
                 </Button>
               </div>
             </div>

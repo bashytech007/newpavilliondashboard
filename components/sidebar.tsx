@@ -56,9 +56,11 @@ const sidebarItems = [
   },
 ];
 
+import { useSidebar } from "@/components/providers/sidebar-provider";
+
 export function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { isCollapsed, toggleSidebar } = useSidebar();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -128,20 +130,26 @@ export function Sidebar({ className }: { className?: string }) {
           className
         )}
       >
-        <div className="flex h-16 items-center border-b px-6">
+        <div className={cn("flex h-16 items-center border-b px-4", isCollapsed ? "justify-center" : "justify-between")}>
           {!isCollapsed && (
             <Image
               src="/lawpavillionlogo.svg"
               alt="LawPavillion"
-              width={146}
-              height={21}
+              width={120}
+              height={18}
               priority
               className="dark:invert dark:hue-rotate-180"
             />
           )}
-          {isCollapsed && (
-            <span className="text-xl font-bold text-primary mx-auto">LP</span>
-          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn("h-8 w-8", isCollapsed ? "mx-auto" : "")}
+            onClick={toggleSidebar}
+            title={isCollapsed ? "Expand" : "Collapse"}
+          >
+             {isCollapsed ? <Menu className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          </Button>
         </div>
 
         <div className="flex-1 overflow-y-auto py-4">
@@ -166,22 +174,7 @@ export function Sidebar({ className }: { className?: string }) {
           </nav>
         </div>
 
-        <div className="border-t p-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full justify-center"
-            onClick={() => setIsCollapsed(!isCollapsed)}
-          >
-            {isCollapsed ? (
-              <Menu className="h-4 w-4" />
-            ) : (
-              <div className="flex items-center gap-2">
-                <ChevronLeft className="h-4 w-4" /> <span>Collapse</span>
-              </div>
-            )}
-          </Button>
-        </div>
+
       </aside>
     </>
   );

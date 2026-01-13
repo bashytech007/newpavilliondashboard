@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { authenticate } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/password-input";
 import {
   Card,
   CardContent,
@@ -47,9 +48,8 @@ export default function LoginPage() {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               name="password"
               placeholder="Enter password"
               required

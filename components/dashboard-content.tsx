@@ -12,7 +12,7 @@ import { RecentSales } from "@/components/recent-sales";
 import { Button } from "@/components/ui/button";
 import { Overview } from "@/components/overview";
 
-export function DashboardContent() {
+export function DashboardContent({ activeCases }: { activeCases?: number }) {
   return (
     <div className="flex-1 space-y-4">
       <div className="flex items-center justify-between space-y-2">
@@ -44,7 +44,7 @@ export function DashboardContent() {
             <Scale className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+15</div>
+            <div className="text-2xl font-bold">+{activeCases !== undefined ? activeCases : 15}</div>
             <p className="text-xs text-muted-foreground">
               +2 new cases this week
             </p>
