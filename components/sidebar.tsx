@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -59,55 +59,66 @@ const sidebarItems = [
 export function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // We only mount the mobile Sheet on the client to avoid hydration errors
+  // The Desktop sidebar renders normally (SSR compatible)
+  const mobileSidebar = isMounted ? (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="lg:hidden fixed top-3 left-4 z-40"
+        >
+          <Menu className="h-6 w-6" />
+          <span className="sr-only">Toggle Menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left" className="w-[280px] p-0">
+        <SheetHeader className="p-6 border-b">
+          <SheetTitle>
+            <div className="flex items-center gap-2 font-bold text-xl text-primary">
+              <Image
+                src="/lawpavillionlogo.svg"
+                alt="LawPavillion"
+                width={146}
+                height={21}
+                priority
+                className="dark:invert dark:hue-rotate-180"
+              />
+            </div>
+          </SheetTitle>
+        </SheetHeader>
+        <div className="flex flex-col py-4">
+          {sidebarItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "flex items-center gap-3 px-6 py-3 text-sm font-medium transition-colors hover:bg-muted hover:text-primary",
+                pathname === item.href
+                  ? "border-r-4 border-primary bg-muted text-primary"
+                  : "text-muted-foreground"
+              )}
+            >
+              <item.icon className="h-5 w-5" />
+              {item.title}
+            </Link>
+          ))}
+        </div>
+      </SheetContent>
+    </Sheet>
+  ) : null;
 
   return (
     <>
       {/* Mobile Sidebar */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden fixed top-3 left-4 z-40"
-          >
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">Toggle Menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-[280px] p-0">
-          <SheetHeader className="p-6 border-b">
-            <SheetTitle>
-              <div className="flex items-center gap-2 font-bold text-xl text-primary">
-                <Image
-                  src="/lawpavillionlogo.svg"
-                  alt="LawPavillion"
-                  width={146}
-                  height={21}
-                  priority
-                  className="dark:invert dark:hue-rotate-180"
-                />
-              </div>
-            </SheetTitle>
-          </SheetHeader>
-          <div className="flex flex-col py-4">
-            {sidebarItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-3 px-6 py-3 text-sm font-medium transition-colors hover:bg-muted hover:text-primary",
-                  pathname === item.href
-                    ? "border-r-4 border-primary bg-muted text-primary"
-                    : "text-muted-foreground"
-                )}
-              >
-                <item.icon className="h-5 w-5" />
-                {item.title}
-              </Link>
-            ))}
-          </div>
-        </SheetContent>
-      </Sheet>
+      {mobileSidebar}
 
       {/* Desktop Sidebar */}
       <aside

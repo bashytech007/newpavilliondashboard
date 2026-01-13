@@ -14,9 +14,23 @@ import { Button } from "./button";
 import { Theme } from "@/interfaces";
 import { Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function ThemeSwitcher() {
   const { setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Button variant="ghost" className="relative" disabled>
+        Theme
+      </Button>
+    );
+  }
 
   async function changeTheme(theme: Theme) {
     setTheme(theme);
