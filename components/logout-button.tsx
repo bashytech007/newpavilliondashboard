@@ -14,10 +14,24 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { logOut } from "@/lib/actions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function LogoutButton() {
   const [open, setOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <Button variant="outline" size="sm" className="gap-2 text-destructive hover:text-destructive hover:bg-destructive/10">
+        <LogOut className="h-4 w-4" />
+        <span className="hidden sm:inline">Log out</span>
+      </Button>
+    );
+  }
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>

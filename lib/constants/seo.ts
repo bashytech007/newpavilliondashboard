@@ -14,10 +14,19 @@ export const SEO_DETAILS = {
     type: 'website',
     locale: 'en_NG',
     siteName: 'LawPavilion',
+    images: [
+      {
+        url: '/dashboard-preview.png',
+        width: 1200,
+        height: 630,
+        alt: 'LawPavilion Dashboard Preview',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     creator: '@LawPavilion', // Replace with actual handle
+    images: ['/dashboard-preview.png'],
   },
   icons: {
     icon: '/icon.png',
